@@ -1,16 +1,14 @@
+
 <nav>
     <div class="nav-wrapper">
       <a href="#!" class="brand-logo border-radius">
         <img class="responsive-img" src="https://st2.depositphotos.com/5943796/11454/v/950/depositphotos_114541482-stock-illustration-initial-letter-wv-blue-swoosh.jpg" width="65" height="25" style="border-radius: 5%;">
       </a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">
-           
+            view_headline
         </i></a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">Productos</a></li>
-        <li><a href="#">Components</a></li>
-        <li><a href="#">Javascript</a></li>
-        <li><a href="#">Mobile</a></li>
       </ul>
     </div>
 </nav>
@@ -21,9 +19,11 @@
     <li><a href="#">Javascript</a></li>
     <li><a href="#">Mobile</a></li>
  </ul>
-
-
-
+<div class="title">
+    <ul class="collection with-header" style="align-content: center;">
+            <li class="collection-header" style="align-content: center; position:relative;"><h4>Inventario General</h4></li>
+    </ul>
+</div>
  <div class="row">
         <div class="col s12">
           <div class="card">
@@ -33,7 +33,7 @@
                   <form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)">
                     <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="productoService.selectedProducto._id">
                     <div class="row">
-                      <div class="input-field col s12">
+                      <div class="input-field col s10">
                         <input type="text" name="idproducto" #name="ngModel" [(ngModel)]="productoService.selectedProducto.idproducto" placeholder="numero entero" required>
                         <label>ID producto :
                           <label class="red-text">*</label>
@@ -41,75 +41,116 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="input-field col s12">
+                      <div class="input-field col s10">
                         <input type="text" name="nombre" #name="ngModel" [(ngModel)]="productoService.selectedProducto.nombre" placeholder="Eg : nombre del producto">
                         <label>Nombre del Producto :</label>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="input-field col s12">
+                      <div class="input-field col s10">
                         <input type="text" name="presentacion" #name="ngModel" [(ngModel)]="productoService.selectedProducto.presentacion" placeholder="Unidad, caja, paquete, etc.">
                         <label>Presentación :</label>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="input-field col s12">
+                      <div class="input-field col s10">
                         <input type="text" name="lote" #name="ngModel" [(ngModel)]="productoService.selectedProducto.lote" placeholder="Eg: TC-70-255502">
                         <label>Lote :</label>
                       </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s10">
                             <input type="text" name="preciounit" #name="ngModel" [(ngModel)]="productoService.selectedProducto.preciounit" placeholder="Eg: 222.22">
                             <label>Precio Unitario ($) :</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s10">
                             <input type="text" name="idclase" #name="ngModel" [(ngModel)]="productoService.selectedProducto.idclase" placeholder="Eg: 70">
                             <label>Codigo de Clasificación :</label>
                         </div>
                     </div>
                     <div class="row">
-                      <div class="input-field col s12">
-                        <button class="btn btn-custom right" type="button" (click)="resetForm(productoForm)">Limpiar</button>                        
-                        <button class="btn btn-custom right" type="submit" [disabled]="!productoForm.valid">Grabar</button>
+                      <div class="input-field col s10">
+                        <button class="btn btn-custom right" type="button" (click)="resetForm(productoForm)" >
+                            Limpiar
+                                <i class="material-icons">
+                                        clear_all
+                                    </i>
+                        </button>                        
+                        <button class="btn btn-custom right" type="submit" [disabled]="!productoForm.valid">
+                            Grabar
+                                <i class="material-icons">
+                                        save
+                                    </i>
+                        </button>
                       </div>
                     </div>
                   </form>
                 </div>
-                <!--
-                <div class="col s7">
+                
+                <div class="col s7" style="background-color:#535c68; border-radius: 5px;">
                     <table class="responsive-table highlight">
                         <thead>
                           <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
+                            <th>ID producto</th>
+                            <th>Nombre producto</th>
+                            <th>Presentación</th>
+                            <th>Lote</th>
+                            <th>Precio</th>
+                            <th>Clasificación</th>
                             <th></th>
                           </tr>
                         </thead>
-                        <tr *ngFor="let emp of employeeService.employees">
-                          <td>{{emp.name}}</td>
-                          <td>{{emp.position}}</td>
-                          <td>{{emp.office}}</td>
+                        <tr *ngFor="let prod of productoService.productos">
+                          <td>{{prod.idproducto}}</td>
+                          <td>{{prod.nombre}}</td>
+                          <td>{{prod.presentacion}}</td>
+                          <td>{{prod.lote}}</td>
+                          <td>{{prod.preciounit}}</td>
+                          <td>{{prod.idclase}}</td>
                           <td>
-                              <a class="action-btn" (click)="onEdit(emp)">
-                                <i class="material-icons">edit</i>
+                              <a class="action-btn" (click)="onEdit(prod)">
+                                <i class="material-icons">refresh</i>
                               </a>
-                              <a class="action-btn" (click)="onDelete(emp._id,employeeForm)">
-                                <i class="material-icons">delete</i>
+                              <a class="action-btn" (click)="onDelete(prod._id,productoForm)">
+                                <i class="material-icons">delete_forever</i>
                               </a>
                             </td>
+                      
                         </tr>
                       </table>
                 </div>
-                -->
+                
               </div>
             </div>
           </div>
         </div>
       
       </div>
+
+      <footer class="page-footer"  style="background-color:#eb4d4b">
+            <div class="container">
+              <div class="row">
+                <div class="col l6 s12">
+                  <h5 class="white-text">Programación Web - 2019</h5>
+                  <p class="grey-text text-lighten-4">Walter Rodríguez</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                  <h5 class="white-text">Links</h5>
+                  <ul>
+                    <li><a class="grey-text text-lighten-3" href="#!">CRUD Inventario</a></li>
+                    <li><a class="grey-text text-lighten-3" href="https://principal.url.edu.gt/">Universidad Rafael Landivar</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="footer-copyright" style="background-color:#30336b">
+              <div class="container">
+              © 2019 Copyright
+              <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+              </div>
+            </div>
+          </footer>
 
          
