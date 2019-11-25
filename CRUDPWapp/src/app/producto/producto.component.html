@@ -1,1 +1,115 @@
-<p>producto works!</p>
+<nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo border-radius">
+        <img class="responsive-img" src="https://st2.depositphotos.com/5943796/11454/v/950/depositphotos_114541482-stock-illustration-initial-letter-wv-blue-swoosh.jpg" width="65" height="25" style="border-radius: 5%;">
+      </a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">
+           
+        </i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Productos</a></li>
+        <li><a href="#">Components</a></li>
+        <li><a href="#">Javascript</a></li>
+        <li><a href="#">Mobile</a></li>
+      </ul>
+    </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="#">Sass</a></li>
+    <li><a href="#">Components</a></li>
+    <li><a href="#">Javascript</a></li>
+    <li><a href="#">Mobile</a></li>
+ </ul>
+
+
+
+ <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content white-text">
+              <div class="row">
+                <div class="col s5">
+                  <form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)">
+                    <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="productoService.selectedProducto._id">
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input type="text" name="idproducto" #name="ngModel" [(ngModel)]="productoService.selectedProducto.idproducto" placeholder="numero entero" required>
+                        <label>ID producto :
+                          <label class="red-text">*</label>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input type="text" name="nombre" #name="ngModel" [(ngModel)]="productoService.selectedProducto.nombre" placeholder="Eg : nombre del producto">
+                        <label>Nombre del Producto :</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input type="text" name="presentacion" #name="ngModel" [(ngModel)]="productoService.selectedProducto.presentacion" placeholder="Unidad, caja, paquete, etc.">
+                        <label>Presentación :</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input type="text" name="lote" #name="ngModel" [(ngModel)]="productoService.selectedProducto.lote" placeholder="Eg: TC-70-255502">
+                        <label>Lote :</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" name="preciounit" #name="ngModel" [(ngModel)]="productoService.selectedProducto.preciounit" placeholder="Eg: 222.22">
+                            <label>Precio Unitario ($) :</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" name="idclase" #name="ngModel" [(ngModel)]="productoService.selectedProducto.idclase" placeholder="Eg: 70">
+                            <label>Codigo de Clasificación :</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <button class="btn btn-custom right" type="button" (click)="resetForm(productoForm)">Limpiar</button>                        
+                        <button class="btn btn-custom right" type="submit" [disabled]="!productoForm.valid">Grabar</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!--
+                <div class="col s7">
+                    <table class="responsive-table highlight">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tr *ngFor="let emp of employeeService.employees">
+                          <td>{{emp.name}}</td>
+                          <td>{{emp.position}}</td>
+                          <td>{{emp.office}}</td>
+                          <td>
+                              <a class="action-btn" (click)="onEdit(emp)">
+                                <i class="material-icons">edit</i>
+                              </a>
+                              <a class="action-btn" (click)="onDelete(emp._id,employeeForm)">
+                                <i class="material-icons">delete</i>
+                              </a>
+                            </td>
+                        </tr>
+                      </table>
+                </div>
+                -->
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+
+         
