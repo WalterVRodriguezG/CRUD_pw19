@@ -8,7 +8,7 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.use(cors({origin: 'http://localhost:4200'}));
+app.use(cors());
 
 app.listen(3000, () => console.log('Inicio de servicio en el puerto: 3000'));
 

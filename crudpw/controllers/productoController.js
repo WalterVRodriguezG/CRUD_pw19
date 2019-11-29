@@ -1,25 +1,54 @@
 const express = require('express');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
+var redis = require('redis');
+const client = redis.createClient('redis://redis:6379')
 
 var {Producto} = require('../models/producto');
 
-router.get('/', (req,res) => {
-    Producto.find((err,docs) =>{
-        if(!err){res.send(docs);}
-        else{console.log('Error en la Recuperación de Productos: ' + JSON.stringify(err, undefined, 2));}
+router.get('/', (req,res) =>{
+    var redis_id = 1;
+    client.get(redis_id, (err,docs)=>{
+        if(err) { console.log('Error while retrieving the data from redis!: ' + err); }
+        if(docs){
+            console.log('Existe en redis!');
+            res.status(200).send(JSON.parse(docs));
+        }
+        else{
+            console.log('No existe en redis!');
+            Producto.find((err,docs) =>{ 
+                if(!err){
+                    client.setex(redis_id, 30, JSON.stringify(docs));
+                    console.log('Response ingresado a redis!')
+                    res.status(200).send(docs);                   
+                }
+                else{ console.log("ERROR: Couldn't retrive data from database :" + JSON.stringify(err,undefined,2)); }
+            });
+        }
     });
 });
 
-router.get('/:id',(req,res) => {
-    if(!ObjectId.isValid(req.params.id))
-        return res.status(400).send(`Registro no encontrado con el id: ${req.params.id}`);
-        
-    Producto.findById(req.params.id,(err,doc) => {
-        if(!err){res.send(doc);}
-        else{console.log('Error en la Recuperación del Producto: ' + JSON.stringify(err, undefined, 2));}
+router.get('/:id',(req,res) =>{
+    client.get(req.params.id, (err, doc) =>{
+        if(err) { console.log('Error while retrieving the data from Redis: ' + err);}
+        if(doc){
+            console.log('Existe en redis!');
+            res.status(200).send(JSON.parse(doc));
+        }
+        else{
+            console.log('No existe en redis!')
+            Producto.findById(req.params.id, (err,doc) =>{
+                if(!err){ 
+                    client.setex(req.params.id, 30, JSON.stringify(doc));
+                    console.log('Response ingresado a redis!')
+                    res.status(200).send(doc);
+                 }
+                 else { res.status(404).send(`No information found with the provided id : ${req.params.id}`); }
+            });
+        }
     });
 });
+
 
 router.post('/',(req,res) => {
     var prod = new Producto({
