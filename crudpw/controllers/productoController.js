@@ -1,6 +1,7 @@
 const express = require('express');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
+
 //var redis = require('redis');
 //const client = redis.createClient('redis://redis:6379')
 
@@ -11,7 +12,7 @@ router.get('/', (req,res) =>{
     client.get(redis_id, (err,docs)=>{
         if(err) { console.log('Error while retrieving the data from redis!: ' + err); }
         if(docs){
-            console.log('Existe en redis!');
+            console.log('Ya existe en redis.');
             res.status(200).send(JSON.parse(docs));
         }
         else{
@@ -26,7 +27,9 @@ router.get('/', (req,res) =>{
                 else{ console.log("ERROR: Couldn't retrive data from database :" + JSON.stringify(err,undefined,2)); }
             //});
        // }
+
     });
+    
 });
 
 router.get('/:id',(req,res) =>{
@@ -47,9 +50,18 @@ router.get('/:id',(req,res) =>{
                  else { res.status(404).send(`No information found with the provided id : ${req.params.id}`); }
           //  });
        // }
+
+            console.log('No existe en redis!')
+            Producto.findById(req.params.id,(err,doc) => {
+                if(!err){
+                    client.setex(req.params.id, 30, JSON.stringify(doc));
+                    console.log('Response ingresado a redis!')
+                    res.status(200).send(doc);
+                }
+                else { res.status(404).send(`No information found with the provided id : ${req.params.id}`); }
+            });
     });
 });
-
 
 router.post('/',(req,res) => {
     var prod = new Producto({
