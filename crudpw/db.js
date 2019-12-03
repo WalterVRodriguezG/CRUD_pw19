@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://mongo:27017/crudInventario', (err)=> {
+mongoose.connect('mongodb://localhost:27017/crudInventario', (err)=> {
     if(!err)
         console.log('Conexión exitosa a MongoDB... ');
     else 
