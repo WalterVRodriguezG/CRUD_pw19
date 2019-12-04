@@ -3,7 +3,7 @@ var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 const redis_url = 'redis';
 var redis = require('redis');
-const client = redis.createClient(6379, redis_url);
+const client = redis.createClient(6380, redis_url);
 
 var {Producto} = require('../models/producto');
 
