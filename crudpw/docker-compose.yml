@@ -6,9 +6,13 @@ services:
       - '3000:3000'
     links :
       - mongo
+      - redis
     depends_on:
       - mongo
   mongo:    
     image: mongo
     ports:
       - "27017:27017"
+  redis:
+    image: redis
+    port: 6379:6379
