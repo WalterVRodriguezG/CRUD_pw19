@@ -6,7 +6,6 @@ services:
       - '3000:3000'
     links :
       - mongo
-      - redis
     depends_on:
       - mongo
   mongo:    

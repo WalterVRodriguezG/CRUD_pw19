@@ -1,12 +1,12 @@
 {
-  "name": "nodejs",
+  "name": "crudpw",
   "version": "1.0.0",
-  "description": "",
+  "description": "crudpw2019",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "walterodriguez",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
